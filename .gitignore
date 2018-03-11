@@ -3,6 +3,8 @@
 
 work/
 
+*.mpf
+
 # ignore compilation output of ModelSim
 *.mti
 *.dat
