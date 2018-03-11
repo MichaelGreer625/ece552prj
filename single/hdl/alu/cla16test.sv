@@ -1,7 +1,7 @@
 module cla_16_test ();
 
 reg signed [15:0] a, b;
-reg padd, sub;
+reg padd, sub, red;
 
 wire signed [15:0] addr, subr, paddr;
 
@@ -13,7 +13,7 @@ assign subr = a - b;
 
 assign paddr = {a[15:12] + b[15:12], a[11:8] + b[11:8], a[7:4] + b[7:4], a[3:0] + b[3:0]};
 
-adder16 idut(a[15:0], b[15:0], padd, sub, sum, cout);
+adder16 idut(a[15:0], b[15:0], padd, sub, red, sum, cout);
 
 initial begin
 forever begin
@@ -22,6 +22,7 @@ forever begin
     b[15:0] = $random;
     sub = 0;
     padd = 1;
+    red = 0;
 #1;
     $display("a %h, b %h, padd %b, sub %b, sum %h, cout %b", a[15:0], b[15:0], padd, sub, sum, cout);
     if (padd == 1) begin
