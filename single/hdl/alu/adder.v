@@ -14,7 +14,8 @@ module adder16
     input [15:0] b,
     input [1:0] mode,
     output [15:0] sum, 
-    output cout
+    output cout,
+    output ov
 );
 
 wire [15:0] bx, sumx, sumsat;
@@ -32,6 +33,9 @@ assign sub = ~mode[1] & mode[0];
 
 // XOR the second input for subtraction
 assign bx = b ^ {16{cin}};
+
+// overflow for ADD/SUB
+assign ov = ovfl_pos[3] | ovfl_neg[3];
 
 // overflow detection
 assign ovfl_pos[0] = padd ? sumx[3] & ~a[3] & ~bx[3] : ovfl_pos[3];

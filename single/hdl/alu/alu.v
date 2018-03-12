@@ -21,6 +21,8 @@ module alu
     output [2:0] flags
 );
 
+wire ov;
+
 wire [15:0] add_out, red_out, shift_out, xor_out;
 
 // mux outputs based on ctl
@@ -30,6 +32,12 @@ assign result = ctl[2] ? ((ctl[1] & ctl[0]) ? xor_out : shift_out) :
 // XOR support
 assign xor_out = a ^ b;
 
+// set N flag as sign bit of add_out only for ADD/SUB instruction
+assign flags[0] = ~(ctl[2] | ctl[1]) & add_out[15];
+
+// set Z flag (for all operations currently)
+assign flags[2] = &result;
+
 // shifter module
 shifter shift_blk(.shift_in(a), .shift_val(), .mode(ctl[1:0]), .shift_out(shift_out));
 
@@ -37,6 +45,6 @@ shifter shift_blk(.shift_in(a), .shift_val(), .mode(ctl[1:0]), .shift_out(shift_
 red red_blk(.psum(add_out), .result(red_out));
 
 // 16bit CLA to support ADD/SUB/PADDSB/RED
-adder16 adder(.a(a), .b(b), .mode(ctl[1:0]), .sum(add_out), .cout());
+adder16 adder(.a(a), .b(b), .mode(ctl[1:0]), .sum(add_out), .cout(), .ov(flags[1]));
 
 endmodule

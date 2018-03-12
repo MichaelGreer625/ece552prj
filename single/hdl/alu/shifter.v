@@ -11,7 +11,7 @@
 module shifter
 (
     input [15:0] shift_in,
-    input [3:0] shift_val
+    input [3:0] shift_val,
     input [1:0] mode,
     output [15:0] shift_out 
 );
