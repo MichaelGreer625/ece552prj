@@ -1,4 +1,4 @@
-//Used a decoder module for both read and writ
+//Used a decoder module for both read and write
 //Read always enabled, write depends on WriteReg
 module ReadDecoder_4_16(
 input [3:0] RegId, 
