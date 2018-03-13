@@ -5,6 +5,9 @@ work/
 
 *.mpf
 
+# Ignore swp files
+*.swp
+
 # ignore compilation output of ModelSim
 *.mti
 *.dat
